@@ -7,8 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule, NgStyle],
   template: `
-    <h4>Exercice 5 : Mini Word</h4>
-    <p class="my-3"
+    <p class="mt-4 mb-2"
        [ngStyle]="{ color: couleur, 'font-size.px': taille, 'font-family': police }">
       Test
     </p>

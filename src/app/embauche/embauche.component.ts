@@ -1,23 +1,30 @@
 import { Component, inject } from '@angular/core';
 import { EmbaucheService } from '../services/embauche.service';
+import { DefaultImagePipe } from '../pipes/default-image.pipe';
 
 @Component({
   selector: 'app-embauche',
   standalone: true,
+  imports: [DefaultImagePipe],
+  styles: [`
+    .panel { background: #e9ecef; border-radius: 4px; padding: 10px; }
+    .list-group-item { border: 1px solid #5bc0de !important; border-radius: 30px !important; margin-bottom: 6px; }
+    img { width: 120px; height: 120px; object-fit: cover; background: #fff; }
+  `],
   template: `
-    <h5 class="mt-4">Liste des embauchés ({{ embauches.length }})</h5>
-    @if (embauches.length === 0) {
-      <p class="text-muted">Aucun CV embauché pour le moment.</p>
+    @if (embauches.length) {
+      <div class="panel mt-4">
+        <p class="small mb-1">Liste des cv pré embauchées:</p>
+        <div class="list-group">
+          @for (cv of embauches; track cv.id) {
+            <div class="list-group-item bg-transparent d-flex align-items-center">
+              <img [src]="cv.path | defaultImage" [alt]="cv.name" class="rounded-circle me-1" />
+              <span class="small">{{ cv.firstname }} {{ cv.name }}</span>
+            </div>
+          }
+        </div>
+      </div>
     }
-    <ul class="list-group">
-      @for (cv of embauches; track cv.id) {
-        <li class="list-group-item">
-          <img [src]="cv.path" [alt]="cv.name" width="32" height="32"
-               class="rounded-circle me-2" />
-          {{ cv.firstname }} {{ cv.name }} – {{ cv.job }}
-        </li>
-      }
-    </ul>
   `,
 })
 export class EmbaucheComponent {

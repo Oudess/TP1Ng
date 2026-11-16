@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule, CurrencyPipe],
   template: `
-    <h3 class="fw-light mb-3">TTC Calculator</h3>
+    <h3 class="mb-2">TTC Calculator</h3>
     <div class="row g-2 mb-3">
       <div class="col">
         <input type="number" class="form-control" min="0" [(ngModel)]="prixHT" />
@@ -19,17 +19,17 @@ import { FormsModule } from '@angular/forms';
       </div>
       <div class="col">
         <input type="number" class="form-control" min="0" [(ngModel)]="tva" />
-        <small class="text-muted">TVA (%)</small>
+        <small class="text-muted">TVA</small>
       </div>
     </div>
     <div class="row g-0 small">
-  <div class="col"><div class="alert alert-info rounded-0 mb-0">
-    Prix unitaire TTC : {{ prixUnitaireTTC | currency: 'USD' }}</div></div>
-  <div class="col"><div class="alert alert-success rounded-0 mb-0">
-    Prix total TTC : {{ totalTTC | currency: 'USD' }}</div></div>
-  <div class="col"><div class="alert alert-danger rounded-0 mb-0">
-    Discount : {{ remise | currency: 'USD' }}</div></div>
-</div>
+      <div class="col"><div class="alert alert-info py-2 mb-0">
+        Prix unitaire TTC : {{ prixUnitaireTTC | currency: 'USD' }}</div></div>
+      <div class="col"><div class="alert alert-success py-2 mb-0">
+        Prix total TTC : {{ totalTTC | currency: 'USD' }}</div></div>
+      <div class="col"><div class="alert alert-danger py-2 mb-0">
+        Discount : {{ remise | currency: 'USD' }}</div></div>
+    </div>
   `,
 })
 export class TtcComponent {

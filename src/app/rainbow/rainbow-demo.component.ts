@@ -5,6 +5,6 @@ import { RainbowDirective } from '../directives/rainbow.directive';
   selector: 'app-rainbow-demo',
   standalone: true,
   imports: [RainbowDirective],
-  template: `<input type="text" appRainbow class="form-control" />`,
+  template: `<input type="text" appRainbow class="form-control w-50" />`,
 })
 export class RainbowDemoComponent {}

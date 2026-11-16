@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../models/todo.model';
 import { TodoService } from '../services/todo.service';
@@ -6,29 +7,46 @@ import { TodoService } from '../services/todo.service';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgTemplateOutlet],
   providers: [TodoService],
   template: `
-    <div class="mb-2">
-      <label class="form-label mb-0">Name :</label>
-      <input class="form-control" [(ngModel)]="name" />
-    </div>
-    <div class="mb-2">
-      <label class="form-label mb-0">Content :</label>
-      <input class="form-control" [(ngModel)]="content" />
-    </div>
-    <button class="btn btn-primary btn-sm mb-3" (click)="addTodo()">Add Todo</button>
-    <ul class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <span><strong>{{ todo.name }}</strong> : {{ todo.content }}</span>
-          <button class="btn btn-danger btn-sm" (click)="deleteTodo(todo)">x</button>
-        </li>
-      }
-    </ul>
+    @if (compact) {
+      <!-- WeekTodo: one small column per day -->
+      <label class="form-label small mb-0">name</label>
+      <input class="form-control form-control-sm mb-1" [(ngModel)]="name" />
+      <label class="form-label small mb-0">content</label>
+      <input class="form-control form-control-sm mb-2" [(ngModel)]="content" />
+      <button class="btn btn-primary btn-sm mb-2" (click)="addTodo()">add</button>
+      <ng-container *ngTemplateOutlet="list"></ng-container>
+    } @else {
+      <div class="row">
+        <div class="col-md-6">
+          <ng-container *ngTemplateOutlet="list"></ng-container>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small mb-0">Name :</label>
+          <input class="form-control mb-1" [(ngModel)]="name" />
+          <label class="form-label small mb-0">Content :</label>
+          <input class="form-control mb-2" [(ngModel)]="content" />
+          <button class="btn btn-primary btn-sm" (click)="addTodo()">Add Todo</button>
+        </div>
+      </div>
+    }
+
+    <ng-template #list>
+      <ul class="list-group">
+        @for (todo of todos; track todo) {
+          <li class="list-group-item d-flex justify-content-between align-items-center small">
+            <span><strong>{{ todo.name }}</strong> : {{ todo.content }}</span>
+            <button class="btn btn-danger btn-sm py-0" (click)="deleteTodo(todo)">x</button>
+          </li>
+        }
+      </ul>
+    </ng-template>
   `,
 })
 export class TodoComponent {
+  @Input() compact = false;
   private todoService = inject(TodoService);
   todos = this.todoService.getTodos();
   name = '';

@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* Bootstrap is loaded from angular.json (node_modules/bootstrap/dist/css/bootstrap.min.css) */
 body {
   background-color: #e3e7ed;
   font-size: 0.9rem;
@@ -7,3 +7,4 @@ body {
 .navbar .nav-link.active {
   color: #0d6efd;
 }
+
